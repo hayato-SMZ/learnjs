@@ -12,4 +12,15 @@ describe('LearnJS', function(){
     learnjs.showView('#problem-42');
     expect(learnjs.problemView).toHaveBeenCalledWith('42');
   });
+  it('has a title that includes the prolem number', function(){
+    expect(learnjs.problemView('1').find('.title').text()).toEqual('Problem #1');
+  });
+
+  it('shows the description', function(){
+    expect(learnjs.problemView('1').find('[data-name="description"]').text()).toEqual("What is truth?");
+  });
+
+  it('shows the problem code',function(){
+    expect(learnjs.problemView('1').find('[data-name="code"]').text()).toEqual("function problem() { return __; }");
+  });
 });
