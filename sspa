@@ -7,7 +7,7 @@ code_bucket=${app_name}/_code_bundles
 profile=admin
 
 function check_python() {
-  if ! which python > /dev/null; then
+  if ! which python3 > /dev/null; then
     echo "Can't find Python. You need Python 2.7 or later to use this."
     exit 1
   fi
@@ -33,11 +33,11 @@ function check_node_deps() {
 
 function dev_server() {
   cd public
-  ret=`python -c 'import sys; print("%i" % (sys.hexversion<0x03000000))'`
+  ret=`python3 -c 'import sys; print("%i" % (sys.hexversion<0x03000000))'`
   if [ $ret -eq 0 ]; then
-    exec python -m http.server 9292
-  else 
-    exec python -m SimpleHTTPServer 9292
+    exec python3 -m http.server 9292
+  else
+    exec python3 -m SimpleHTTPServer 9292
   fi
 }
 
@@ -276,9 +276,9 @@ function help() {
   echo "#################################################"
   echo "# Serverless Single Page Apps - The Bash Helper #"
   echo "#################################################"
-  echo 
+  echo
   echo "Usage: sspa <action> [arguments...]"
-  echo 
+  echo
   echo "Where <action> is one of:"
   echo "    server"
   echo "    liveserver"
@@ -291,7 +291,7 @@ function help() {
   echo "    deploy_bundle"
   echo "    create_service <config file>"
   #echo "    create_gateway <config_file> <service> - Attach an API Gateway to a service"
-  echo 
+  echo
 }
 
 action=${1:-"help"}
@@ -349,7 +349,7 @@ case "$action" in
     if [[ $# -eq 2 ]]; then
       create_identity_pool ${2}
     else
-      echo "Please specify a Cognito identity pool configuration directory" 
+      echo "Please specify a Cognito identity pool configuration directory"
       exit 1
     fi
     ;;
@@ -359,7 +359,7 @@ case "$action" in
     if [[ $# -eq 3 ]]; then
       create_table ${2} ${3}
     else
-      echo "Please specify a DynamoDB table configuration directory and identity pool name" 
+      echo "Please specify a DynamoDB table configuration directory and identity pool name"
       exit 1
     fi
     ;;
@@ -370,7 +370,7 @@ case "$action" in
       build_bundle
       create_lambda_service ${2}
     else
-      echo "Please specify a Lambda config directory" 
+      echo "Please specify a Lambda config directory"
       exit 1
     fi
     ;;
